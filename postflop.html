@@ -219,4 +219,44 @@
         const hStackLabel = document.getElementById(`st-0`);
         
         if (!isTurn) {
-            doc
+            document.getElementById('pot-display').innerText = "POT: 24 BB";
+            hBet.innerHTML = `<div class="action-tag" style="background:#1e40af">BET</div><div class="chip-amount">12 BB</div>`;
+            vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">RAISE</div><div class="chip-amount">36 BB</div>`;
+            
+            // Restar al Hero lo que ya apostó (12 BB)
+            hStackLabel.innerText = "88 BB"; 
+            // Restar al Villano su raise (36 BB)
+            vStackLabel.innerText = "64 BB";
+
+            actionContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
+            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-c" onclick="checkAction('CALL')">CALL</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">ALL IN</button>`;
+        } else {
+            document.getElementById('pot-display').innerText = "POT: 48 BB";
+            hBet.innerHTML = `<div class="action-tag" style="background:#1e40af">BET</div><div class="chip-amount">24 BB</div>`;
+            vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">ALL IN</div><div class="chip-amount">64 BB</div>`;
+            
+            // Turn: Hero apuesta 24
+            hStackLabel.innerText = "76 BB";
+            // Turn: Villano va All-in (le quedan 64)
+            vStackLabel.innerText = "0 BB";
+            vStackLabel.style.color = "#ef4444"; // Color rojo para el 0
+
+            actionContainer.style.gridTemplateColumns = "1fr 1fr";
+            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">CALL ALL-IN</button>`;
+        }
+        hBet.style.display = 'flex'; vBet.style.display = 'flex';
+    }
+
+    function checkAction(action) {
+        const overlay = document.getElementById('feedback-overlay');
+        const isCorrect = action === currentScenario.correct;
+        updateStats(isCorrect);
+        overlay.innerHTML = isCorrect ? `CORRECTO<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>` : `ERROR<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>`;
+        overlay.style.backgroundColor = isCorrect ? "#16a34a" : "#dc2626";
+        overlay.style.display = "block";
+        setTimeout(() => { overlay.style.display = "none"; if(isCorrect) generate3BetScenario(); }, 2000);
+    }
+    window.onload = generate3BetScenario;
+</script>
+</body>
+</html>
