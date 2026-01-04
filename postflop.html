@@ -87,18 +87,18 @@
             <div id="pot-display" class="pot-label">POT: 24 BB</div>
             <div id="board" class="board-container"></div>
             
-            <div id="pod-0" class="player-pod v-seat-0 active-player"><div id="hero-cards" class="hero-hand"></div><div class="avatar-frame" style="border-color: #fbbf24;"><img src="https://i.pravatar.cc/150?u=hero" class="w-full h-full object-cover"></div><div class="name-plate">HERO</div><div class="stack-val" id="st-0">76 BB</div></div>
+            <div id="pod-0" class="player-pod v-seat-0 active-player"><div id="hero-cards" class="hero-hand"></div><div class="avatar-frame" style="border-color: #fbbf24;"><img src="https://i.pravatar.cc/150?u=hero" class="w-full h-full object-cover"></div><div class="name-plate">HERO</div><div class="stack-val" id="st-0">100 BB</div></div>
             <div id="bet-0" class="bet-chips v-bet-0"></div>
             
-            <div id="pod-1" class="player-pod v-seat-1"><div class="card-back-group" id="cb-1"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=1" class="w-full h-full object-cover"></div><div class="name-plate">UTG</div><div class="stack-val">100 BB</div></div>
+            <div id="pod-1" class="player-pod v-seat-1"><div class="card-back-group" id="cb-1"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=1" class="w-full h-full object-cover"></div><div class="name-plate">UTG</div><div class="stack-val" id="st-1">100 BB</div></div>
             <div id="bet-1" class="bet-chips v-bet-1"></div>
-            <div id="pod-2" class="player-pod v-seat-2"><div class="card-back-group" id="cb-2"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=2" class="w-full h-full object-cover"></div><div class="name-plate">MP</div><div class="stack-val">100 BB</div></div>
+            <div id="pod-2" class="player-pod v-seat-2"><div class="card-back-group" id="cb-2"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=2" class="w-full h-full object-cover"></div><div class="name-plate">MP</div><div class="stack-val" id="st-2">100 BB</div></div>
             <div id="bet-2" class="bet-chips v-bet-2"></div>
-            <div id="pod-3" class="player-pod v-seat-3"><div class="card-back-group" id="cb-3"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=3" class="w-full h-full object-cover"></div><div class="name-plate">CO</div><div class="stack-val">100 BB</div></div>
+            <div id="pod-3" class="player-pod v-seat-3"><div class="card-back-group" id="cb-3"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=3" class="w-full h-full object-cover"></div><div class="name-plate">CO</div><div class="stack-val" id="st-3">100 BB</div></div>
             <div id="bet-3" class="bet-chips v-bet-3"></div>
-            <div id="pod-4" class="player-pod v-seat-4"><div class="card-back-group" id="cb-4"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=4" class="w-full h-full object-cover"></div><div class="name-plate">BU</div><div class="stack-val">100 BB</div></div>
+            <div id="pod-4" class="player-pod v-seat-4"><div class="card-back-group" id="cb-4"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=4" class="w-full h-full object-cover"></div><div class="name-plate">BU</div><div class="stack-val" id="st-4">100 BB</div></div>
             <div id="bet-4" class="bet-chips v-bet-4"></div>
-            <div id="pod-5" class="player-pod v-seat-5"><div class="card-back-group" id="cb-5"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=5" class="w-full h-full object-cover"></div><div class="name-plate">SB</div><div class="stack-val">100 BB</div></div>
+            <div id="pod-5" class="player-pod v-seat-5"><div class="card-back-group" id="cb-5"></div><div class="avatar-frame"><img src="https://i.pravatar.cc/150?u=5" class="w-full h-full object-cover"></div><div class="name-plate">SB</div><div class="stack-val" id="st-5">100 BB</div></div>
             <div id="bet-5" class="bet-chips v-bet-5"></div>
         </div>
     </div>
@@ -119,7 +119,6 @@
     let actualHands = 0;
     let recordHands = localStorage.getItem('poker_record_postflop') || 0;
 
-    // Inicializar visual de récords
     document.getElementById('record-val').innerText = recordHands;
 
     function updateStats(isCorrect) {
@@ -141,8 +140,14 @@
         document.querySelectorAll('.card-back-group').forEach(cb => cb.innerHTML = '');
         document.querySelectorAll('.bet-chips').forEach(b => { b.style.display = 'none'; b.innerHTML = ''; });
         document.getElementById('dealer-btn').className = 'dealer-button';
-        const actionContainer = document.getElementById('action-btns-container');
+        
+        // Resetear todos los stacks visualmente a 100 antes de empezar
+        for(let i=0; i<6; i++) {
+            document.getElementById(`st-${i}`).innerText = "100 BB";
+            document.getElementById(`st-${i}`).style.color = "#22c55e";
+        }
 
+        const actionContainer = document.getElementById('action-btns-container');
         const seqType = Math.floor(Math.random() * 4); 
         let heroPos, villanoPos, vSeatIdx;
 
@@ -157,17 +162,23 @@
         vSeatIdx = (villanoPos - heroPos + 6) % 6;
         window.vActiveIdx = vSeatIdx;
 
+        // Lógica de posiciones y ciegas
         for (let i = 0; i < 6; i++) {
             const logicalIdx = (i + heroPos) % 6;
             const pod = document.getElementById(`pod-${i}`);
-            pod.querySelector('.name-plate').innerText = i === 0 ? `HERO (${posNames[heroPos]})` : posNames[logicalIdx];
+            const posLabel = posNames[logicalIdx];
+            pod.querySelector('.name-plate').innerText = i === 0 ? `HERO (${posLabel})` : posLabel;
+            
             if (i === 0 || i === vSeatIdx) pod.classList.add('active-player');
             if (i === vSeatIdx) document.getElementById(`cb-${i}`).innerHTML = '<div class="card-back"></div><div class="card-back"></div>';
             if (logicalIdx === 3) document.getElementById('dealer-btn').classList.add(`d-pos-${i}`);
+
+            // Restar ciegas visualmente
+            if (posLabel === 'SB') document.getElementById(`st-${i}`).innerText = "99.5 BB";
+            if (posLabel === 'BB') document.getElementById(`st-${i}`).innerText = "99 BB";
         }
 
         const situations = [
-            // FLOP
             { type:'flop', hand: {v1:'A', v2:'K', s1:'hearts', s2:'spades', i1:'♥', i2:'♠'}, board: [{v:'A',s:'clubs',i:'♣'},{v:'J',s:'diamonds',i:'♦'},{v:'5',s:'spades',i:'♠'}], correct: 'FOLD', msg: 'TP no paga Raise x3.' },
             { type:'flop', hand: {v1:'K', v2:'K', s1:'clubs', s2:'diamonds', i1:'♣', i2:'♦'}, board: [{v:'K',s:'spades',i:'♠'},{v:'7',s:'hearts',i:'♥'},{v:'2',s:'diamonds',i:'♦'}], correct: 'CALL', msg: 'Set en seco: atrapa.' },
             { type:'flop', hand: {v1:'J', v2:'J', s1:'clubs', s2:'hearts', i1:'♣', i2:'♥'}, board: [{v:'J',s:'spades',i:'♠'},{v:'10',s:'spades',i:'♠'},{v:'5',s:'diamonds',i:'♦'}], correct: 'ALLIN', msg: 'Set en board sucio: Proteger.' },
@@ -180,8 +191,6 @@
             { type:'flop', hand: {v1:'A', v2:'4', s1:'clubs', s2:'clubs', i1:'♣', i2:'♣'}, board: [{v:'Q',s:'clubs',i:'♣'},{v:'J',s:'clubs',i:'♣'},{v:'10',s:'hearts',i:'♥'}], correct: 'CALL', msg: 'Nut Flush Draw: Paga.' },
             { type:'flop', hand: {v1:'8', v2:'7', s1:'diamonds', s2:'diamonds', i1:'♦', i2:'♦'}, board: [{v:'A',s:'hearts',i:'♥'},{v:'K',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'}], correct: 'FOLD', msg: 'Aire total: FOLD.' },
             { type:'flop', hand: {v1:'Q', v2:'J', s1:'hearts', s2:'hearts', i1:'♥', i2:'♥'}, board: [{v:'Q',s:'spades',i:'♠'},{v:'10',s:'diamonds',i:'♦'},{v:'5',s:'clubs',i:'♣'}], correct: 'FOLD', msg: 'TP kicker débil ante Raise.' },
-
-            // TURN
             { type:'turn', hand: {v1:'A', v2:'A', s1:'hearts', s2:'diamonds', i1:'♥', i2:'♦'}, board: [{v:'A',s:'spades',i:'♠'},{v:'8',s:'hearts',i:'♥'},{v:'3',s:'clubs',i:'♣'},{v:'K',s:'spades',i:'♠'}], correct: 'ALLIN', msg: 'Set en seco: CALL ALL-IN.' },
             { type:'turn', hand: {v1:'J', v2:'10', s1:'clubs', s2:'clubs', i1:'♣', i2:'♣'}, board: [{v:'Q',s:'clubs',i:'♣'},{v:'9',s:'clubs',i:'♣'},{v:'2',s:'diamonds',i:'♦'},{v:'8',s:'clubs',i:'♣'}], correct: 'ALLIN', msg: 'NUTS (Color): Paga All-in.' },
             { type:'turn', hand: {v1:'9', v2:'9', s1:'hearts', s2:'diamonds', i1:'♥', i2:'♦'}, board: [{v:'9',s:'spades',i:'♠'},{v:'10',s:'spades',i:'♠'},{v:'J',s:'spades',i:'♠'},{v:'2',s:'spades',i:'♠'}], correct: 'FOLD', msg: 'Set vs 4 picas: FOLD.' },
@@ -206,35 +215,8 @@
 
         const hBet = document.getElementById('bet-0');
         const vBet = document.getElementById(`bet-${window.vActiveIdx}`);
+        const vStackLabel = document.getElementById(`st-${window.vActiveIdx}`);
+        const hStackLabel = document.getElementById(`st-0`);
         
         if (!isTurn) {
-            document.getElementById('pot-display').innerText = "POT: 24 BB";
-            hBet.innerHTML = `<div class="action-tag" style="background:#1e40af">BET</div><div class="chip-amount">12 BB</div>`;
-            vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">RAISE</div><div class="chip-amount">36 BB</div>`;
-            actionContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
-            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-c" onclick="checkAction('CALL')">CALL</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">ALL IN</button>`;
-        } else {
-            document.getElementById('pot-display').innerText = "POT: 48 BB";
-            hBet.innerHTML = `<div class="action-tag" style="background:#1e40af">BET</div><div class="chip-amount">24 BB</div>`;
-            vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">ALL IN</div><div class="chip-amount">64 BB</div>`;
-            actionContainer.style.gridTemplateColumns = "1fr 1fr";
-            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">CALL ALL-IN</button>`;
-        }
-        hBet.style.display = 'flex'; vBet.style.display = 'flex';
-    }
-
-    function checkAction(action) {
-        const overlay = document.getElementById('feedback-overlay');
-        const isCorrect = action === currentScenario.correct;
-        
-        updateStats(isCorrect);
-        
-        overlay.innerHTML = isCorrect ? `CORRECTO<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>` : `ERROR<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>`;
-        overlay.style.backgroundColor = isCorrect ? "#16a34a" : "#dc2626";
-        overlay.style.display = "block";
-        setTimeout(() => { overlay.style.display = "none"; if(isCorrect) generate3BetScenario(); }, 2000);
-    }
-    window.onload = generate3BetScenario;
-</script>
-</body>
-</html>
+            doc
