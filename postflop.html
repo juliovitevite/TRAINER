@@ -18,7 +18,8 @@
         .stat-val { color: #fbbf24; }
         .stat-actual { color: #fff; }
 
-        #feedback-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 15px; font-weight: 900; font-size: 20px; text-transform: uppercase; display: none; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.8); width: 80%; }
+        /* Estilo del overlay mejorado para que cubra y capture clics */
+        #feedback-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 15px 30px; border-radius: 15px; font-weight: 900; font-size: 20px; text-transform: uppercase; display: none; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.8); width: 80%; cursor: pointer; }
         
         .poker-table { width: 100%; height: 85%; max-width: 440px; background: radial-gradient(circle at center, #1e4d30 0%, #0a1f14 100%); border: 8px solid #3d2b1f; border-radius: 150px; position: relative; box-shadow: inset 0 0 60px rgba(0,0,0,0.8); z-index: 1; }
         .dealer-button { position: absolute; width: 22px; height: 22px; background: white; color: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; z-index: 70; border: 1px solid #999; }
@@ -68,7 +69,7 @@
         .btn-a { background: #b91c1c; border-bottom: 4px solid #7f1d1d; }
     </style>
 </head>
-<body>
+<body onclick="closeFeedback()">
 
 <div class="main-app">
     <div class="table-container">
@@ -134,7 +135,7 @@
         { board: [{v:'8',s:'clubs',i:'♣'},{v:'5',s:'diamonds',i:'♦'},{v:'4',s:'hearts',i:'♥'},{v:'K',s:'spades',i:'♠'}], hand: {v1:'7',v2:'6',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'CO', villanoPos:'SB', pot:14, heroStack:100, villanoStack:100, betHero:12, betVillano:30, correct:'CALL', msg:'TENEMOS NUTS HAY QUE DEJARLO BLUFEAR.' },
         { board: [{v:'A',s:'clubs',i:'♣'},{v:'Q',s:'diamonds',i:'♦'},{v:'J',s:'hearts',i:'♥'}], hand: {v1:'K',v2:'10',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'UTG', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'CALL', msg:'Flop: Escalera Nuts - dejarlo blufear.' },
         { board: [{v:'9',s:'diamonds',i:'♦'},{v:'10',s:'diamonds',i:'♦'},{v:'2',s:'spades',i:'♠'}], hand: {v1:'Q',v2:'J',s1:'diamonds',s2:'diamonds',i1:'♦',i2:'♦'}, heroPos:'MP', villanoPos:'SB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'CALL', msg:'Flop: Super Combo Draw - Pagamos Raise.' },
-        { board: [{v:'4',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'},{v:'10',s:'diamonds',i:'♦'},{v:'Q',s:'spades',i:'♠'}], hand: {v1:'A',v2:'A',s1:'diamonds',s2:'hearts',i1:'♦',i2:'♥'}, heroPos:'BU', villanoPos:'BB', pot:38, heroStack:100, villanoStack:100, betHero:10, betVillano:80, correct:'FOLD', msg:'HAY QUE JUGAR MUY NIT VS RAISE' }
+        { board: [{v:'4',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'},{v:'10',s:'diamonds',i:'♦'},{v:'Q',s:'spades',i:'♠'}], hand: {v1:'A',v2:'A',s1:'diamonds',s2:'hearts',i1:'♦',i2:'♥'}, heroPos:'BU', villanoPos:'BB', pot:52, heroStack:100, villanoStack:100, betHero:26, betVillano:75, correct:'FOLD', msg:'HAY QUE JUGAR MUY NIT VS RAISE' }
     ];
 
     // // LIBRERIAS DE ESCENARIOS CUANDO HACEMOS CHECK Y EL VILLANO HACE BET
@@ -154,6 +155,10 @@
     const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB'];
     let currentScenario = null;
     let actualHands = 0;
+    let isFeedbackActive = false;
+    let lastResult = false;
+    let lastScenarioKey = ""; // Identificador para evitar repetir la misma mano consecutiva
+    
     let recordHands = localStorage.getItem('poker_record_postflop') || 0;
     document.getElementById('record-val').innerText = recordHands;
 
@@ -167,20 +172,32 @@
     }
 
     function generate3BetScenario() {
+        isFeedbackActive = false;
+        document.getElementById('feedback-overlay').style.display = "none";
+        
         document.querySelectorAll('.player-pod').forEach(p => p.classList.remove('active-player'));
         document.querySelectorAll('.card-back-group').forEach(cb => cb.innerHTML = '');
         document.querySelectorAll('.bet-chips').forEach(b => { b.style.display = 'none'; b.innerHTML = ''; });
         document.getElementById('dealer-btn').className = 'dealer-button';
         const actionContainer = document.getElementById('action-btns-container');
         
-        // Probabilidad para elegir base de datos (60% original, 20% check-bet, 20% villain-lead)
+        // Probabilidad para elegir base de datos
         const rand = Math.random();
         let db;
-        if (rand < 0.6) db = ESCENARIOS_DATABASE;
-        else if (rand < 0.8) db = DATABASE_CHECK_BET;
-        else db = DATABASE_VILLAIN_LEAD;
+        let dbType = "";
+        if (rand < 0.6) { db = ESCENARIOS_DATABASE; dbType = "orig"; }
+        else if (rand < 0.8) { db = DATABASE_CHECK_BET; dbType = "check"; }
+        else { db = DATABASE_VILLAIN_LEAD; dbType = "lead"; }
 
-        const randomIdx = Math.floor(Math.random() * db.length);
+        // Bucle para evitar repetir la misma mano
+        let randomIdx;
+        let newKey = "";
+        do {
+            randomIdx = Math.floor(Math.random() * db.length);
+            newKey = dbType + "_" + randomIdx;
+        } while (newKey === lastScenarioKey && db.length > 1);
+        
+        lastScenarioKey = newKey;
         currentScenario = JSON.parse(JSON.stringify(db[randomIdx]));
         
         const hPosIdx = posNames.indexOf(currentScenario.heroPos);
@@ -202,7 +219,6 @@
             if (i === 0) {
                 pod.classList.add('active-player');
                 const moneyInPot = currentScenario.pot / 2;
-                // Si Hero no ha apostado ('NONE' o 0), el stack se calcula sin betHero
                 const currentHeroBet = (currentScenario.betHero === 'NONE') ? 0 : currentScenario.betHero;
                 const displayStack = currentScenario.heroStack - moneyInPot - currentHeroBet;
                 stackLabel.innerText = `${displayStack.toFixed(1)} BB`;
@@ -228,9 +244,8 @@
         const hBet = document.getElementById('bet-0');
         const vBet = document.getElementById(`bet-${vSeatIdx}`);
         
-        // LÓGICA DE ETIQUETAS BASADA EN EL ESCENARIO
         if(currentScenario.betHero === 'NONE') {
-            hBet.style.display = 'none'; // Villano habla primero, Hero no tiene etiqueta
+            hBet.style.display = 'none'; 
         } else if(currentScenario.betHero === 0) {
             hBet.innerHTML = `<div class="action-tag" style="background:#444">CHECK</div><div class="chip-amount">0 BB</div>`;
             hBet.style.display = 'flex';
@@ -242,36 +257,51 @@
         const moneyInPotVCheck = currentScenario.pot / 2;
         const isVAllIn = currentScenario.betVillano >= (currentScenario.villanoStack - moneyInPotVCheck - 0.5);
         
-        // Si Hero no tiene etiqueta o hizo Check, la acción del villano es un "BET" inicial en esa calle
         let vTag = isVAllIn ? 'ALL IN' : 'RAISE';
         if(currentScenario.betHero === 0 || currentScenario.betHero === 'NONE') vTag = isVAllIn ? 'ALL IN' : 'BET';
         
         vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">${vTag}</div><div class="chip-amount">${currentScenario.betVillano} BB</div>`;
         vBet.style.display = 'flex';
 
-        // AJUSTE DE BOTONES
         if (vTag === 'ALL IN') {
             actionContainer.style.gridTemplateColumns = "1fr 1fr";
             actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">CALL ALL-IN</button>`;
         } else {
-            // Si el villano lidera, el botón de presión suele ser Raise/All-in según estrategia
-            const actionText = (db === DATABASE_CHECK_BET || db === DATABASE_VILLAIN_LEAD) ? "RAISE" : "ALL IN";
-            const actionCode = (db === DATABASE_CHECK_BET || db === DATABASE_VILLAIN_LEAD) ? "RAISE" : "ALLIN";
+            const actionText = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALL IN";
+            const actionCode = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALLIN";
             actionContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
             actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-c" onclick="checkAction('CALL')">CALL</button><button class="btn-p btn-a" onclick="checkAction('${actionCode}')">${actionText}</button>`;
         }
     }
 
     function checkAction(action) {
+        if(isFeedbackActive) return;
+
         const overlay = document.getElementById('feedback-overlay');
-        // Validación flexible para Raise/All-in
         const isCorrect = action === currentScenario.correct || (action === 'RAISE' && currentScenario.correct === 'ALLIN') || (action === 'ALLIN' && currentScenario.correct === 'RAISE');
+        
+        lastResult = isCorrect;
         updateStats(isCorrect);
-        overlay.innerHTML = isCorrect ? `CORRECTO<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>` : `ERROR<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span>`;
+        
+        overlay.innerHTML = (isCorrect ? `CORRECTO` : `ERROR`) + `<br><span style="font-size:12px; font-weight:400">${currentScenario.msg}</span><br><span style="font-size:10px; font-weight:700; opacity:0.8; margin-top:10px; display:block;">TOCA EN CUALQUIER LADO PARA CONTINUAR</span>`;
         overlay.style.backgroundColor = isCorrect ? "#16a34a" : "#dc2626";
         overlay.style.display = "block";
-        setTimeout(() => { overlay.style.display = "none"; if(isCorrect) generate3BetScenario(); }, 2000);
+        
+        setTimeout(() => { isFeedbackActive = true; }, 100);
     }
+
+    function closeFeedback() {
+        if (!isFeedbackActive) return;
+        
+        const overlay = document.getElementById('feedback-overlay');
+        overlay.style.display = "none";
+        isFeedbackActive = false;
+
+        if (lastResult) {
+            generate3BetScenario();
+        }
+    }
+
     window.onload = generate3BetScenario;
 </script>
 </body>
