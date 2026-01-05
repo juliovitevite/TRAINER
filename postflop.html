@@ -128,28 +128,48 @@
         { board: [{v:'Q',s:'spades',i:'♠'},{v:'J',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'}], hand: {v1:'Q',v2:'J',s1:'clubs',s2:'clubs',i1:'♣',i2:'♣'}, heroPos:'CO', villanoPos:'SB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'ALLIN', msg:'Flop: DOBLE PAREJA - AUN PUEDE TENER MANOS COMO AA KK AQ KQ.' },
         { board: [{v:'Q',s:'spades',i:'♠'},{v:'J',s:'hearts',i:'♥'},{v:'5',s:'clubs',i:'♣'}], hand: {v1:'A',v2:'Q',s1:'clubs',s2:'clubs',i1:'♣',i2:'♣'}, heroPos:'BU', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'FOLD', msg:'FOLD PUEDE TENER MANOS COMO AA - KK - QQ - JJ -55 - DOBLES' },
         { board: [{v:'8',s:'hearts',i:'♥'},{v:'7',s:'clubs',i:'♣'},{v:'3',s:'spades',i:'♠'}], hand: {v1:'8',v2:'8',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'BU', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:8, betVillano:24, correct:'CALL', msg:'Flop: Set - Atrapamos en board seco.' },
-        { board: [{v:'A',s:'diamonds',i:'♦'},{v:'K',s:'spades',i:'♠'},{v:'6',s:'hearts',i:'♥'},{v:'4',s:'hearts',i:'♥'}], hand: {v1:'A',v2:'K',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'MP', villanoPos:'UTG', pot:60, heroStack:100, villanoStack:100, betHero:25, betVillano:75, correct:'FOLD', msg:'HAY QUE SABER SOLTAR SIEMPRE LLEVA SET' },
+        { board: [{v:'A',s:'diamonds',i:'♦'},{v:'K',s:'spades',i:'♠'},{v:'6',s:'hearts',i:'♥'},{v:'4',s:'hearts',i:'♥'}], hand: {v1:'A',v2:'K',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'MP', villanoPos:'UTG', pot:60, heroStack:100, villanoStack:100, betHero:25, betVillano:75, correct:'FOLD', msg:'HAY QUE JUGAR MUY NIT VS RAISE' },
         { board: [{v:'10',s:'hearts',i:'♥'},{v:'6',s:'spades',i:'♠'},{v:'2',s:'clubs',i:'♣'},{v:'Q',s:'diamonds',i:'♦'},{v:'5',s:'hearts',i:'♥'}], hand: {v1:'A',v2:'10',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'BU', villanoPos:'CO', pot:100, heroStack:100, villanoStack:80, betHero:30, betVillano:80, correct:'FOLD', msg:'HAY QUE SABER SOLTAR ESTAS MANOS, SIEMPRE LLEVAN SET O DOBLES' },
         { board: [{v:'9',s:'diamonds',i:'♦'},{v:'7',s:'hearts',i:'♥'},{v:'2',s:'spades',i:'♠'},{v:'K',s:'clubs',i:'♣'},{v:'A',s:'spades',i:'♠'}], hand: {v1:'J',v2:'J',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'UTG', villanoPos:'MP', pot:52, heroStack:100, villanoStack:100, betHero:25, betVillano:75, correct:'FOLD', msg:'River: Dos Overcards en mesa - Fold fácil.' },
         { board: [{v:'K',s:'hearts',i:'♥'},{v:'10',s:'hearts',i:'♥'},{v:'4',s:'spades',i:'♠'},{v:'2',s:'clubs',i:'♣'},{v:'7',s:'diamonds',i:'♦'}], hand: {v1:'A',v2:'Q',s1:'hearts',s2:'hearts',i1:'♥',i2:'♥'}, heroPos:'BU', villanoPos:'BB', pot:52, heroStack:100, villanoStack:100, betHero:35, betVillano:75, correct:'FOLD', msg:'River: Proyecto de color fallido - No pagar All-in.' },
         { board: [{v:'8',s:'clubs',i:'♣'},{v:'5',s:'diamonds',i:'♦'},{v:'4',s:'hearts',i:'♥'},{v:'K',s:'spades',i:'♠'}], hand: {v1:'7',v2:'6',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'CO', villanoPos:'SB', pot:14, heroStack:100, villanoStack:100, betHero:12, betVillano:30, correct:'CALL', msg:'TENEMOS NUTS HAY QUE DEJARLO BLUFEAR.' },
         { board: [{v:'A',s:'clubs',i:'♣'},{v:'Q',s:'diamonds',i:'♦'},{v:'J',s:'hearts',i:'♥'}], hand: {v1:'K',v2:'10',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'UTG', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'CALL', msg:'Flop: Escalera Nuts - dejarlo blufear.' },
         { board: [{v:'9',s:'diamonds',i:'♦'},{v:'10',s:'diamonds',i:'♦'},{v:'2',s:'spades',i:'♠'}], hand: {v1:'Q',v2:'J',s1:'diamonds',s2:'diamonds',i1:'♦',i2:'♦'}, heroPos:'MP', villanoPos:'SB', pot:24, heroStack:100, villanoStack:100, betHero:12, betVillano:36, correct:'CALL', msg:'Flop: Super Combo Draw - Pagamos Raise.' },
-        { board: [{v:'4',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'},{v:'10',s:'diamonds',i:'♦'},{v:'Q',s:'spades',i:'♠'}], hand: {v1:'A',v2:'A',s1:'diamonds',s2:'hearts',i1:'♦',i2:'♥'}, heroPos:'BU', villanoPos:'BB', pot:52, heroStack:100, villanoStack:100, betHero:26, betVillano:75, correct:'FOLD', msg:'HAY QUE JUGAR MUY NIT VS RAISE' }
+        { board: [{v:'4',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'},{v:'10',s:'diamonds',i:'♦'},{v:'Q',s:'spades',i:'♠'}], hand: {v1:'A',v2:'A',s1:'diamonds',s2:'hearts',i1:'♦',i2:'♥'}, heroPos:'BU', villanoPos:'BB', pot:38, heroStack:100, villanoStack:100, betHero:10, betVillano:80, correct:'FOLD', msg:'HAY QUE JUGAR MUY NIT VS RAISE' },
+        { board: [{v:'A',s:'hearts',i:'♥'},{v:'6',s:'diamonds',i:'♦'},{v:'10',s:'hearts',i:'♥'},{v:'2',s:'clubs',i:'♣'}], hand: {v1:'A',v2:'10',s1:'diamonds',s2:'diamonds',i1:'♦',i2:'♦'}, heroPos:'BB', villanoPos:'MP', pot:40, heroStack:100, villanoStack:100, betHero:20, betVillano:80, correct:'FOLD', msg:'TENEMOS DOBLES PERO ANTE UN PUSH NO PODEMOS PAGAR LLEVA SET ' },
+        { board: [{v:'Q',s:'hearts',i:'♥'},{v:'5',s:'hearts',i:'♥'},{v:'3',s:'hearts',i:'♥'}], hand: {v1:'T',v2:'9',s1:'hearts',s2:'hearts',i1:'♥',i2:'♥'}, heroPos:'MP', villanoPos:'SB', pot:9.5, heroStack:100, villanoStack:100, betHero:1, betVillano:95, correct:'FOLD', msg:'LLEVAMOS COLOR MEDIO Y FALTA COLOR AL AS Y SU PUSH ES MUY FUERTE FOLDEAMOS' },
+        { board: [{v:'K',s:'diamonds',i:'♦'},{v:'3',s:'clubs',i:'♣'},{v:'Q',s:'diamonds',i:'♦'},{v:'7',s:'clubs',i:'♣'},{v:'10',s:'spades',i:'♠'}], hand: {v1:'J',v2:'9',s1:'hearts',s2:'hearts',i1:'♥',i2:'♥'}, heroPos:'CO', villanoPos:'SB', pot:11, heroStack:100, villanoStack:100, betHero:5, betVillano:89, correct:'FOLD', msg:'SI BIEN TENEMOS ESCALA ES "LA ESCALA DEL TONTO", SI NOS PUSHEAN LLEVAN LA ESCALA BIEN ARRIBA ' },
+        { board: [{v:'4',s:'hearts',i:'♥'},{v:'A',s:'clubs',i:'♣'},{v:'9',s:'hearts',i:'♥'},{v:'8',s:'spades',i:'♠'},{v:'7',s:'clubs',i:'♣'}], hand: {v1:'A',v2:'9',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'BU', villanoPos:'CO', pot:44.5, heroStack:100, villanoStack:100, betHero:'23', betVillano:78, correct:'FOLD', msg:'TENEMOS DOBLES Y NOS PUSHEAN HAY QUE FOLDEAR ESTAS MANOS, ' }
+    
     ];
 
     // // LIBRERIAS DE ESCENARIOS CUANDO HACEMOS CHECK Y EL VILLANO HACE BET
     const DATABASE_CHECK_BET = [
         { board: [{v:'8',s:'diamonds',i:'♦'},{v:'5',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'}], hand: {v1:'J',v2:'J',s1:'hearts',s2:'spades',i1:'♥',i2:'♠'}, heroPos:'UTG', villanoPos:'MP', pot:24, heroStack:100, villanoStack:100, betHero:0, betVillano:12, correct:'CALL', msg:'Check-Call: Overpair en board seco, pagamos para controlar pot. PERO CUIDADO SI MANDA OTRO TORTAZO' },
         { board: [{v:'9',s:'hearts',i:'♥'},{v:'10',s:'hearts',i:'♥'},{v:'J',s:'hearts',i:'♥'}], hand: {v1:'A',v2:'K',s1:'spades',s2:'clubs',i1:'♠',i2:'♣'}, heroPos:'CO', villanoPos:'BU', pot:24, heroStack:100, villanoStack:100, betHero:0, betVillano:18, correct:'FOLD', msg:'Check-Fold: Board desastroso para AK, nos rendimos.' },
-        { board: [{v:'7',s:'hearts',i:'♥'},{v:'4',s:'diamonds',i:'♦'},{v:'2',s:'clubs',i:'♣'}], hand: {v1:'7',v2:'7',s1:'spades',s2:'clubs',i1:'♠',i2:'♣'}, heroPos:'SB', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:0, betVillano:16, correct:'CALL', msg:'BETEA MUY FUERTE TIENE MANO, HAY QUE DEJAR QUE FAROLEE' }
+        { board: [{v:'7',s:'hearts',i:'♥'},{v:'4',s:'diamonds',i:'♦'},{v:'2',s:'clubs',i:'♣'}], hand: {v1:'7',v2:'7',s1:'spades',s2:'clubs',i1:'♠',i2:'♣'}, heroPos:'SB', villanoPos:'BB', pot:24, heroStack:100, villanoStack:100, betHero:0, betVillano:16, correct:'CALL', msg:'BETEA MUY FUERTE TIENE MANO, HAY QUE DEJAR QUE FAROLEE' },
+        { board: [{v:'8',s:'hearts',i:'♥'},{v:'3',s:'diamonds',i:'♦'},{v:'7',s:'hearts',i:'♥'},{v:'6',s:'hearts',i:'♥'},{v:'9',s:'diamonds',i:'♦'}], hand: {v1:'A',v2:'A',s1:'diamonds',s2:'clubs',i1:'♦',i2:'♣'}, heroPos:'SB', villanoPos:'BU', pot:78, heroStack:100, villanoStack:100, betHero:0, betVillano:61.5, correct:'FOLD', msg:'HAY ESCALA Y COLOR ABIERTO Y PUEDE TENER SET TAMBIEN O DOBLES' }
+        
     ];
 
-    // // LIBRERIAS DE ESCENARIOS CUANDO EL VILLANO HABLA PRIMERO Y HERO REACCIONA (VILLAIN LEAD)
+    // // LIBRERIAS DE ESCENARIOS CUANDO EL VILLANO HACE BET Y HERO REACCIONA (VILLAIN LEAD)
     const DATABASE_VILLAIN_LEAD = [
         { board: [{v:'Q',s:'diamonds',i:'♦'},{v:'7',s:'spades',i:'♠'},{v:'2',s:'hearts',i:'♥'}], hand: {v1:'A',v2:'Q',s1:'hearts',s2:'hearts',i1:'♥',i2:'♥'}, heroPos:'BU', villanoPos:'SB', pot:24, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:8, correct:'CALL', msg:'Villano apuesta de primero. Tenemos Top Pair, pagamos para controlar.' },
         { board: [{v:'10',s:'hearts',i:'♥'},{v:'9',s:'hearts',i:'♥'},{v:'8',s:'hearts',i:'♥'}], hand: {v1:'2',v2:'2',s1:'spades',s2:'diamonds',i1:'♠',i2:'♦'}, heroPos:'BB', villanoPos:'UTG', pot:4.5, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:3, correct:'FOLD', msg:'Villano apuesta fuerte en board conectado. Fold fácil.' },
-        { board: [{v:'K',s:'spades',i:'♠'},{v:'K',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'}], hand: {v1:'K',v2:'Q',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'BU', villanoPos:'MP', pot:24, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:12, correct:'CALL', msg:'TRAP: Villano apuesta en nuestro Trips. Solo pagamos para que siga blfeando.' }
+        { board: [{v:'K',s:'spades',i:'♠'},{v:'K',s:'hearts',i:'♥'},{v:'4',s:'clubs',i:'♣'}], hand: {v1:'K',v2:'Q',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'BU', villanoPos:'MP', pot:24, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:12, correct:'CALL', msg:'TRAP: Villano apuesta en nuestro Trips. Solo pagamos para que siga blfeando.' },
+        { board: [{v:'2',s:'diamonds',i:'♦'},{v:'K',s:'diamonds',i:'♦'},{v:'10',s:'clubs',i:'♣'},{v:'Q',s:'hearts',i:'♥'}], hand: {v1:'Q',v2:'Q',s1:'spades',s2:'diamonds',i1:'♠',i2:'♦'}, heroPos:'CO', villanoPos:'UTG', pot:33.5, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:33.5, correct:'ALLIN', msg:'TENEMOS UNA MANO MUY FUERTE, SI BIEN HAY ESCALA YA COMPLETA, CON ESTA MANO VAMOS POR TODO' },
+        { board: [{v:'A',s:'hearts',i:'♥'},{v:'6',s:'diamonds',i:'♦'},{v:'10',s:'hearts',i:'♥'},{v:'2',s:'clubs',i:'♣'}], hand: {v1:'A',v2:'10',s1:'diamonds',s2:'diamonds',i1:'♦',i2:'♦'}, heroPos:'BB', villanoPos:'MP', pot:11.5, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:9, correct:'RAISE', msg:'TENEMOS UNA MANO MUY FUERTE, PERO SI NOS RAISEAN O VAN ALL IN SOLO TENEMOS DOS PARES. PERDEMOS CON SET' },
+        { board: [{v:'J',s:'diamonds',i:'♦'},{v:'6',s:'hearts',i:'♥'},{v:'5',s:'clubs',i:'♣'},{v:'6',s:'spades',i:'♠'},{v:'T',s:'diamonds',i:'♦'}], hand: {v1:'K',v2:'K',s1:'diamonds',s2:'clubs',i1:'♦',i2:'♣'}, heroPos:'BU', villanoPos:'CO', pot:81.5, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:41, correct:'FOLD', msg:'BETEA MUY FUERTE EL RIVER, HAY QUE SABER FOLDEAR ESTAS MANOS SON LAS QUE NOS SUBEN EL WINRATE SI FOLDEAMOS' }
+    
+    ];
+
+    // // NUEVA LIBRERIA: VILLANO HACE CHECK PRIMERO Y HERO DECIDE (CHECK, BET, ALL-IN)
+    const DATABASE_VILLAIN_CHECK = [
+        { board: [{v:'Q',s:'hearts',i:'♥'},{v:'A',s:'diamonds',i:'♦'},{v:'10',s:'diamonds',i:'♦'},{v:'4',s:'diamonds',i:'♦'}], hand: {v1:'K',v2:'J',s1:'hearts',s2:'hearts',i1:'♥',i2:'♥'}, heroPos:'BU', villanoPos:'CO', pot:63.5, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:0, correct:'CHECK', msg:'Villano hace Check. NUESTRA MANO YA ES SHOWDON TENEMOS QUE HACER CHECK.' },
+        { board: [{v:'J',s:'hearts',i:'♥'},{v:'10',s:'hearts',i:'♥'},{v:'9',s:'spades',i:'♠'}], hand: {v1:'Q',v2:'Q',s1:'clubs',s2:'diamonds',i1:'♣',i2:'♦'}, heroPos:'CO', villanoPos:'MP', pot:24, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:0, correct:'CHECK', msg:'Board muy conectado y peligroso. Mejor dar Check por detrás para controlar el pozo con nuestra Overpair.' },
+        { board: [{v:'4',s:'diamonds',i:'♦'},{v:'4',s:'clubs',i:'♣'},{v:'2',s:'spades',i:'♠'},{v:'10',s:'hearts',i:'♥'},{v:'K',s:'spades',i:'♠'}], hand: {v1:'7',v2:'6',s1:'diamonds',s2:'diamonds',i1:'♦',i2:'♦'}, heroPos:'BU', villanoPos:'SB', pot:52, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:0, correct:'BET', msg:'No tenemos nada pero el villano muestra debilidad extrema en River. Un Bet puede tirar sus manos medias.' },
+        { board: [{v:'4',s:'hearts',i:'♥'},{v:'A',s:'clubs',i:'♣'},{v:'9',s:'hearts',i:'♥'},{v:'8',s:'spades',i:'♠'}], hand: {v1:'A',v2:'9',s1:'spades',s2:'spades',i1:'♠',i2:'♠'}, heroPos:'BU', villanoPos:'CO', pot:52, heroStack:100, villanoStack:100, betHero:'NONE', betVillano:0, correct:'BET', msg:'BET 50-75% ESTA BIEN PERO SI NOS RAISEAN, HAY QUE FOLDEAR' }
+    
     ];
 
     const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB'];
@@ -181,13 +201,14 @@
         document.getElementById('dealer-btn').className = 'dealer-button';
         const actionContainer = document.getElementById('action-btns-container');
         
-        // Probabilidad para elegir base de datos
+        // Probabilidad para elegir base de datos incluyendo la nueva
         const rand = Math.random();
         let db;
         let dbType = "";
-        if (rand < 0.6) { db = ESCENARIOS_DATABASE; dbType = "orig"; }
-        else if (rand < 0.8) { db = DATABASE_CHECK_BET; dbType = "check"; }
-        else { db = DATABASE_VILLAIN_LEAD; dbType = "lead"; }
+        if (rand < 0.45) { db = ESCENARIOS_DATABASE; dbType = "orig"; }
+        else if (rand < 0.65) { db = DATABASE_CHECK_BET; dbType = "check"; }
+        else if (rand < 0.8) { db = DATABASE_VILLAIN_LEAD; dbType = "lead"; }
+        else { db = DATABASE_VILLAIN_CHECK; dbType = "vcheck"; }
 
         // Bucle para evitar repetir la misma mano
         let randomIdx;
@@ -219,7 +240,7 @@
             if (i === 0) {
                 pod.classList.add('active-player');
                 const moneyInPot = currentScenario.pot / 2;
-                const currentHeroBet = (currentScenario.betHero === 'NONE') ? 0 : currentScenario.betHero;
+                const currentHeroBet = (currentScenario.betHero === 'NONE' || currentScenario.betHero === 0) ? 0 : currentScenario.betHero;
                 const displayStack = currentScenario.heroStack - moneyInPot - currentHeroBet;
                 stackLabel.innerText = `${displayStack.toFixed(1)} BB`;
             } else if (i === vSeatIdx) {
@@ -244,6 +265,7 @@
         const hBet = document.getElementById('bet-0');
         const vBet = document.getElementById(`bet-${vSeatIdx}`);
         
+        // HERO BET VISUALS
         if(currentScenario.betHero === 'NONE') {
             hBet.style.display = 'none'; 
         } else if(currentScenario.betHero === 0) {
@@ -254,23 +276,39 @@
             hBet.style.display = 'flex';
         }
         
-        const moneyInPotVCheck = currentScenario.pot / 2;
-        const isVAllIn = currentScenario.betVillano >= (currentScenario.villanoStack - moneyInPotVCheck - 0.5);
-        
-        let vTag = isVAllIn ? 'ALL IN' : 'RAISE';
-        if(currentScenario.betHero === 0 || currentScenario.betHero === 'NONE') vTag = isVAllIn ? 'ALL IN' : 'BET';
-        
-        vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">${vTag}</div><div class="chip-amount">${currentScenario.betVillano} BB</div>`;
-        vBet.style.display = 'flex';
-
-        if (vTag === 'ALL IN') {
-            actionContainer.style.gridTemplateColumns = "1fr 1fr";
-            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">CALL ALL-IN</button>`;
+        // VILLAIN BET VISUALS
+        if(currentScenario.betVillano === 0) {
+            vBet.innerHTML = `<div class="action-tag" style="background:#444">CHECK</div><div class="chip-amount">0 BB</div>`;
+            vBet.style.display = 'flex';
         } else {
-            const actionText = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALL IN";
-            const actionCode = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALLIN";
+            const moneyInPotVCheck = currentScenario.pot / 2;
+            const isVAllIn = currentScenario.betVillano >= (currentScenario.villanoStack - moneyInPotVCheck - 0.5);
+            let vTag = isVAllIn ? 'ALL IN' : 'RAISE';
+            if(currentScenario.betHero === 0 || currentScenario.betHero === 'NONE') vTag = isVAllIn ? 'ALL IN' : 'BET';
+            vBet.innerHTML = `<div class="action-tag" style="background:#b91c1c">${vTag}</div><div class="chip-amount">${currentScenario.betVillano} BB</div>`;
+            vBet.style.display = 'flex';
+        }
+
+        // BUTTONS LOGIC
+        if (dbType === "vcheck") {
+            // Especial para DATABASE_VILLAIN_CHECK: CHECK, BET, ALL IN
             actionContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
-            actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-c" onclick="checkAction('CALL')">CALL</button><button class="btn-p btn-a" onclick="checkAction('${actionCode}')">${actionText}</button>`;
+            actionContainer.innerHTML = `
+                <button class="btn-p btn-f" style="background:#444; border-bottom: 4px solid #222;" onclick="checkAction('CHECK')">CHECK</button>
+                <button class="btn-p btn-c" onclick="checkAction('BET')">BET</button>
+                <button class="btn-p btn-a" onclick="checkAction('ALLIN')">ALL IN</button>`;
+        } else {
+            // Lógica normal para los otros escenarios
+            const isVAllIn = vBet.innerText.includes('ALL IN');
+            if (isVAllIn) {
+                actionContainer.style.gridTemplateColumns = "1fr 1fr";
+                actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-a" onclick="checkAction('ALLIN')">CALL ALL-IN</button>`;
+            } else {
+                const actionText = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALL IN";
+                const actionCode = (dbType === "check" || dbType === "lead") ? "RAISE" : "ALLIN";
+                actionContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
+                actionContainer.innerHTML = `<button class="btn-p btn-f" onclick="checkAction('FOLD')">FOLD</button><button class="btn-p btn-c" onclick="checkAction('CALL')">CALL</button><button class="btn-p btn-a" onclick="checkAction('${actionCode}')">${actionText}</button>`;
+            }
         }
     }
 
