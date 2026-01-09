@@ -100,126 +100,41 @@
 </div>
 
 <script>
-    const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB']; // utg 0 mp 1 co 2 bu 3 sb 4 // bb 5 
+    const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB']; // UTG 0
+    const suits = [
+        { name: 'spades', icon: '♠' },
+        { name: 'hearts', icon: '♥' },
+        { name: 'clubs', icon: '♣' },
+        { name: 'diamonds', icon: '♦' }
+    ];
+
     const range = [
-        {id: 'AA', v1: 'A', v2: 'A', s1: 'spades', s2: 'hearts', i1: '♠', i2: '♥'},
-        {id: 'KK', v1: 'K', v2: 'K', s1: 'clubs', s2: 'diamonds', i1: '♣', i2: '♦'},
-        {id: 'QQ', v1: 'Q', v2: 'Q', s1: 'hearts', s2: 'diamonds', i1: '♥', i2: '♦'},
-        {id: 'AKs', v1: 'A', v2: 'K', s1: 'spades', s2: 'spades', i1: '♠', i2: '♠'},
-        {id: 'AKo', v1: 'A', v2: 'K', s1: 'diamonds', s2: 'clubs', i1: '♦', i2: '♣'},
-        {id: 'JJ', v1: 'J', v2: 'J', s1: 'clubs', s2: 'hearts', i1: '♣', i2: '♥'},
-        {id: 'AQs', v1: 'A', v2: 'Q', s1: 'diamonds', s2: 'diamonds', i1: '♦', i2: '♦'}
+        {id: 'AA', v1: 'A', v2: 'A', type: 'pair'},
+        {id: 'KK', v1: 'K', v2: 'K', type: 'pair'},
+        {id: 'QQ', v1: 'Q', v2: 'Q', type: 'pair'},
+        {id: 'AKs', v1: 'A', v2: 'K', type: 'suited'},
+        {id: 'AKo', v1: 'A', v2: 'K', type: 'offsuited'},
+        {id: 'JJ', v1: 'J', v2: 'J', type: 'pair'},
+        {id: 'AQs', v1: 'A', v2: 'Q', type: 'suited'}
     ];
 
     const manualScenarios = [
-        {
-            id: 'A5s_4BET',
-            hand: {id: 'A5s', v1: 'A', v2: '5', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'},
-            heroPos: 3, villanoPos: 2, hBet: 7.5, vBet: 24,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: true },
-                { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-        {
-            id: 'KK_UTG_MP',
-            hand: {id: 'KK', v1: 'K', v2: 'K', s1: 'diamonds', s2: 'hearts', i1: '♦', i2: '♥'},
-            heroPos: 0, villanoPos: 1, hBet: 24, vBet: 100,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: true },
-                { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-        {
-            id: 'AA_TRAP',
-            hand: {id: 'AA', v1: 'A', v2: 'A', s1: 'spades', s2: 'hearts', i1: '♠', i2: '♥'},
-            heroPos: 4, villanoPos: 5, hBet: 2, vBet: 7.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '4BET', color: 'btn-allin-red', isCorrect: true }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: 'A', v2: 'J', s1: 'spades', s2: 'hearts', i1: '♠', i2: '♥'},
-            heroPos: 2, villanoPos: 0, hBet: 7.5, vBet: 24,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: true },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '4BET', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-         {
-            id: '',
-            hand: {id: '', v1: '9', v2: '8', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'},
-            heroPos: 3, villanoPos: 2, hBet: 7.5, vBet: 24,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: true },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-         {
-            id: '',
-            hand: {id: '', v1: '9', v2: '8', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'},
-            heroPos: 3, villanoPos: 2, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: true }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: '6', v2: '6', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'},
-            heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: true },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: 'K', v2: 'Q', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'},
-            heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: true }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: 'K', v2: 'Q', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'},
-            heroPos: 4, villanoPos: 2, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: true }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: '5', v2: '5', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'},
-            heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: true },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: false },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
-        {
-            id: '',
-            hand: {id: '', v1: 'K', v2: '2', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'},
-            heroPos: 5, villanoPos: 4, hBet: 0, vBet: 2.5,
-            buttons: [
-                { text: 'FOLD', color: 'bg-slate-700', isCorrect: false },
-                { text: 'CALL', color: 'btn-call-blue', isCorrect: true },
-                { text: '3BET', color: 'btn-allin-red', isCorrect: false }
-            ]
-        },
+        { id: 'A5s_4BET', hand: {id: 'A5s', v1: 'A', v2: '5', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'}, heroPos: 3, villanoPos: 2, hBet: 7.5, vBet: 24, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: 'KK_UTG_MP', hand: {id: 'KK', v1: 'K', v2: 'K', s1: 'diamonds', s2: 'hearts', i1: '♦', i2: '♥'}, heroPos: 0, villanoPos: 1, hBet: 24, vBet: 100, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: 'AA_TRAP', hand: {id: 'AA', v1: 'A', v2: 'A', s1: 'spades', s2: 'hearts', i1: '♠', i2: '♥'}, heroPos: 4, villanoPos: 5, hBet: 2, vBet: 7.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '4BET', color: 'btn-allin-red', isCorrect: true } ] },
+        { id: '', hand: {id: '', v1: 'A', v2: 'J', s1: 'spades', s2: 'hearts', i1: '♠', i2: '♥'}, heroPos: 2, villanoPos: 0, hBet: 7.5, vBet: 24, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '4BET', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: '', hand: {id: '', v1: '9', v2: '8', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'}, heroPos: 3, villanoPos: 2, hBet: 7.5, vBet: 24, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: 'ALL IN', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: '', hand: {id: '', v1: '9', v2: '8', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'}, heroPos: 3, villanoPos: 2, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: true } ] },
+        { id: '', hand: {id: '', v1: '6', v2: '6', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: true }, { text: '3BET', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: '', hand: {id: '', v1: 'K', v2: 'Q', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: true } ] },
+        { id: '', hand: {id: '', v1: 'K', v2: 'Q', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 2, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: true } ] },
+        { id: '', hand: {id: '', v1: '5', v2: '5', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: false } ] },
+        { id: '', hand: {id: '', v1: 'K', v2: '2', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'}, heroPos: 5, villanoPos: 4, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: true }, { text: '3BET', color: 'btn-allin-red', isCorrect: false } ] },
+        
+
+
+
+
     ];
 
     let currentHand = null;
@@ -229,7 +144,21 @@
     let activeManualButtons = null;
     let actualHands = 0;
     let recordHands = localStorage.getItem('poker_record_preflop') || 0;
+    let currentHBet = 0;
+    let currentVBet = 0;
+
     document.getElementById('record-val').innerText = recordHands;
+
+    function getRandomPalos(hand) {
+        let s1, s2;
+        const shf = [...suits].sort(() => 0.5 - Math.random());
+        if (hand.type === 'suited') {
+            s1 = s2 = shf[0];
+        } else {
+            s1 = shf[0]; s2 = shf[1];
+        }
+        return { ...hand, s1: s1.name, i1: s1.icon, s2: s2.name, i2: s2.icon };
+    }
 
     function renderButtons(mode) {
         const container = document.getElementById('button-container');
@@ -245,15 +174,10 @@
             });
         } else if (mode === '3BET_50') {
             activeManualButtons = null;
-            container.innerHTML = `
-                <button class="btn-p bg-slate-700" onclick="checkDecision('FOLD')">FOLD</button>
-                <button class="btn-p btn-call-blue" onclick="checkDecision('CALL')">CALL</button>
-                <button class="btn-p btn-allin-red" onclick="checkDecision('ALLIN')">ALL IN</button>`;
+            container.innerHTML = `<button class="btn-p bg-slate-700" onclick="checkDecision('FOLD')">FOLD</button><button class="btn-p btn-call-blue" onclick="checkDecision('CALL')">CALL</button><button class="btn-p btn-allin-red" onclick="checkDecision('ALLIN')">ALL IN</button>`;
         } else {
             activeManualButtons = null;
-            container.innerHTML = `
-                <button class="btn-p bg-slate-700" onclick="checkDecision('FOLD')">FOLD</button>
-                <button class="btn-p btn-allin-red" onclick="checkDecision('ALLIN')">ALL IN</button>`;
+            container.innerHTML = `<button class="btn-p bg-slate-700" onclick="checkDecision('FOLD')">FOLD</button><button class="btn-p btn-allin-red" onclick="checkDecision('ALLIN')">ALL IN</button>`;
         }
     }
 
@@ -264,8 +188,21 @@
             isCorrect = activeManualButtons[input].isCorrect;
         } else {
             if (villanoStackSize === 100) {
-                if (input === 'ALLIN') isCorrect = (currentHand.id === 'AA' || (currentHand.id === 'KK' && !isVillanoNit));
-                if (input === 'FOLD') isCorrect = (['QQ', 'AKs', 'AKo', 'JJ', 'AQs'].includes(currentHand.id) || (currentHand.id === 'KK' && isVillanoNit));
+                if (input === 'ALLIN') {
+                    if (currentHand.id === 'AA') isCorrect = true;
+                    else if (currentHand.id === 'KK') {
+                        if (currentHBet === 24 && currentVBet === 100) isCorrect = false;
+                        else if (currentVBet === 24 && isVillanoNit) isCorrect = false;
+                        else isCorrect = true;
+                    }
+                }
+                if (input === 'FOLD') {
+                    if (['QQ', 'AKs', 'AKo', 'JJ', 'AQs'].includes(currentHand.id)) isCorrect = true;
+                    else if (currentHand.id === 'KK') {
+                        if (currentHBet === 24 && currentVBet === 100) isCorrect = true;
+                        else if (currentVBet === 24 && isVillanoNit) isCorrect = true;
+                    }
+                }
             } else {
                 if (scenarioAction === "push") {
                     if (input === 'ALLIN') isCorrect = ['AA', 'KK', 'AKs'].includes(currentHand.id);
@@ -273,7 +210,6 @@
                 } else if (scenarioAction === "3bet") {
                     if (input === 'ALLIN') isCorrect = ['AA', 'KK', 'AKs'].includes(currentHand.id);
                     if (input === 'CALL') isCorrect = ['QQ', 'JJ', 'AKo', 'AQs'].includes(currentHand.id);
-                    if (input === 'FOLD') isCorrect = false;
                 }
             }
         }
@@ -293,27 +229,28 @@
         
         if (manualScenarios.length > 0 && Math.random() < 0.3) {
             const s = manualScenarios[Math.floor(Math.random() * manualScenarios.length)];
-            currentHand = s.hand; villanoStackSize = 100;
+            currentHand = s.hand; currentHBet = s.hBet; currentVBet = s.vBet; villanoStackSize = 100;
             setupUI(s.heroPos, s.villanoPos, s.hBet, s.vBet, 100);
             renderButtons(s.buttons);
         } else {
-            currentHand = range[Math.floor(Math.random() * range.length)];
+            const baseHand = range[Math.floor(Math.random() * range.length)];
+            currentHand = getRandomPalos(baseHand);
             villanoStackSize = Math.random() > 0.7 ? 50 : 100;
             let heroPosIdx = Math.floor(Math.random() * 6);
             let villanoPosIdx;
             do { villanoPosIdx = Math.floor(Math.random() * 6); } while (villanoPosIdx === heroPosIdx);
-            let hBet, vBet, btnType;
+            
             if (villanoStackSize === 100) {
                 if (currentHand.id === 'KK' && Math.random() > 0.5) isVillanoNit = true;
-                hBet = (heroPosIdx < villanoPosIdx) ? 24 : 10;
-                vBet = (heroPosIdx < villanoPosIdx) ? 100 : 24;
-                btnType = 'NORMAL';
+                currentHBet = (heroPosIdx < villanoPosIdx) ? 24 : 10;
+                currentVBet = (heroPosIdx < villanoPosIdx) ? 100 : 24;
+                setupUI(heroPosIdx, villanoPosIdx, currentHBet, currentVBet, 100);
+                renderButtons('NORMAL');
             } else {
-                if (Math.random() > 0.5) { scenarioAction = "push"; hBet = 10; vBet = 50; btnType = 'NORMAL'; }
-                else { scenarioAction = "3bet"; hBet = 2; vBet = 10; btnType = '3BET_50'; }
+                if (Math.random() > 0.5) { scenarioAction = "push"; currentHBet = 10; currentVBet = 50; renderButtons('NORMAL'); }
+                else { scenarioAction = "3bet"; currentHBet = 2; currentVBet = 10; renderButtons('3BET_50'); }
+                setupUI(heroPosIdx, villanoPosIdx, currentHBet, currentVBet, 50);
             }
-            setupUI(heroPosIdx, villanoPosIdx, hBet, vBet, villanoStackSize);
-            renderButtons(btnType);
         }
     }
 
@@ -324,20 +261,13 @@
             const logicalPos = (i + hPos) % 6;
             const pod = document.getElementById(`pod-${i}`);
             pod.dataset.stack = (logicalPos === vPos) ? vStack : 100;
-            
-            // LÓGICA DE STACKS CON CIEGAS
             let currentStack = parseFloat(pod.dataset.stack);
-            
-            // Restar ciegas automáticas
-            if (logicalPos === 4) currentStack -= 0.5; // SB
-            if (logicalPos === 5) currentStack -= 1.0; // BB
-            
-            // Si el jugador es Hero o Villano y están en ciegas, su apuesta "pisa" la ciega
+            if (logicalPos === 4) currentStack -= 0.5;
+            if (logicalPos === 5) currentStack -= 1.0;
             if (i === 0) {
                 pod.querySelector('.name-plate').innerText = `HERO (${posNames[logicalPos]})`;
                 pod.classList.add('active-player', 'opacity-100');
                 pod.querySelector('.avatar-frame').classList.add('is-hero-frame');
-                // Si Hero NO es ciega, restamos su apuesta. Si ES ciega, hBet ya incluye el total.
                 if (logicalPos !== 4 && logicalPos !== 5) currentStack -= hBet;
                 else currentStack = parseFloat(pod.dataset.stack) - hBet;
             } else if (logicalPos === vPos) {
@@ -346,16 +276,9 @@
                 pod.querySelector('.name-plate').innerText = isVillanoNit ? `${posNames[logicalPos]} (NIT)` : posNames[logicalPos];
                 if (logicalPos !== 4 && logicalPos !== 5) currentStack -= vBet;
                 else currentStack = parseFloat(pod.dataset.stack) - vBet;
-            } else {
-                pod.querySelector('.name-plate').innerText = posNames[logicalPos];
-            }
-
+            } else { pod.querySelector('.name-plate').innerText = posNames[logicalPos]; }
             pod.querySelector('.stack-val').innerText = currentStack.toFixed(1) + " BB";
-
-            if (logicalPos === 3) {
-                dealerBtn.classList.add(`d-pos-${i}`);
-                dealerBtn.style.display = 'flex';
-            }
+            if (logicalPos === 3) { dealerBtn.classList.add(`d-pos-${i}`); dealerBtn.style.display = 'flex'; }
         }
         let vVisIdx = (vPos - hPos + 6) % 6;
         document.getElementById(`bet-0`).innerText = hBet + " BB";
@@ -379,7 +302,6 @@
         localStorage.setItem('pokerGameData', JSON.stringify(gameData));
         window.location.href = 'postflop.html';
     }
-
     window.onload = generateScenario;
 </script>
 </body>
