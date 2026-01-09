@@ -100,7 +100,7 @@
 </div>
 
 <script>
-    const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB']; // UTG 0
+    const posNames = ['UTG', 'MP', 'CO', 'BU', 'SB', 'BB'];
     const suits = [
         { name: 'spades', icon: '♠' },
         { name: 'hearts', icon: '♥' },
@@ -130,11 +130,6 @@
         { id: '', hand: {id: '', v1: 'K', v2: 'Q', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 2, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: true } ] },
         { id: '', hand: {id: '', v1: '5', v2: '5', s1: 'hearts', s2: 'spades', i1: '♥', i2: '♠'}, heroPos: 4, villanoPos: 3, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: true }, { text: 'CALL', color: 'btn-call-blue', isCorrect: false }, { text: '3BET', color: 'btn-allin-red', isCorrect: false } ] },
         { id: '', hand: {id: '', v1: 'K', v2: '2', s1: 'hearts', s2: 'hearts', i1: '♥', i2: '♥'}, heroPos: 5, villanoPos: 4, hBet: 0, vBet: 2.5, buttons: [ { text: 'FOLD', color: 'bg-slate-700', isCorrect: false }, { text: 'CALL', color: 'btn-call-blue', isCorrect: true }, { text: '3BET', color: 'btn-allin-red', isCorrect: false } ] },
-        
-
-
-
-
     ];
 
     let currentHand = null;
@@ -152,11 +147,8 @@
     function getRandomPalos(hand) {
         let s1, s2;
         const shf = [...suits].sort(() => 0.5 - Math.random());
-        if (hand.type === 'suited') {
-            s1 = s2 = shf[0];
-        } else {
-            s1 = shf[0]; s2 = shf[1];
-        }
+        if (hand.type === 'suited') { s1 = s2 = shf[0]; }
+        else { s1 = shf[0]; s2 = shf[1]; }
         return { ...hand, s1: s1.name, i1: s1.icon, s2: s2.name, i2: s2.icon };
     }
 
@@ -184,6 +176,7 @@
     function checkDecision(input) {
         const overlay = document.getElementById('feedback-overlay');
         let isCorrect = false;
+        
         if (activeManualButtons !== null) {
             isCorrect = activeManualButtons[input].isCorrect;
         } else {
@@ -195,15 +188,17 @@
                         else if (currentVBet === 24 && isVillanoNit) isCorrect = false;
                         else isCorrect = true;
                     }
+                    else if (currentHand.id === 'AKs') isCorrect = false; // REGLA: NUNCA ALL IN AKS
                 }
                 if (input === 'FOLD') {
-                    if (['QQ', 'AKs', 'AKo', 'JJ', 'AQs'].includes(currentHand.id)) isCorrect = true;
+                    if (['QQ', 'AKo', 'JJ', 'AQs'].includes(currentHand.id)) isCorrect = true;
+                    else if (currentHand.id === 'AKs') isCorrect = true; // REGLA: SIEMPRE FOLD ANTE 4BET/PUSH
                     else if (currentHand.id === 'KK') {
                         if (currentHBet === 24 && currentVBet === 100) isCorrect = true;
                         else if (currentVBet === 24 && isVillanoNit) isCorrect = true;
                     }
                 }
-            } else {
+            } else { // LOGICA 50 BB (SE MANTIENE IGUAL)
                 if (scenarioAction === "push") {
                     if (input === 'ALLIN') isCorrect = ['AA', 'KK', 'AKs'].includes(currentHand.id);
                     if (input === 'FOLD') isCorrect = ['QQ', 'JJ', 'AKo', 'AQs'].includes(currentHand.id);
@@ -227,21 +222,30 @@
         document.querySelectorAll('.card-back-group').forEach(c => c.style.display = 'none');
         document.querySelectorAll('.bet-chips').forEach(b => { b.style.display = 'none'; b.style.borderColor = '#fbbf24'; });
         
-        if (manualScenarios.length > 0 && Math.random() < 0.3) {
+        if (manualScenarios.length > 0 && Math.random() < 0.2) {
             const s = manualScenarios[Math.floor(Math.random() * manualScenarios.length)];
             currentHand = s.hand; currentHBet = s.hBet; currentVBet = s.vBet; villanoStackSize = 100;
             setupUI(s.heroPos, s.villanoPos, s.hBet, s.vBet, 100);
             renderButtons(s.buttons);
         } else {
-            const baseHand = range[Math.floor(Math.random() * range.length)];
+            // FRECUENCIA AUMENTADA PARA KK Y AKs (60% de probabilidad de ser una de estas dos)
+            let baseHand;
+            const randHand = Math.random();
+            if (randHand < 0.10) baseHand = range.find(r => r.id === 'KK');
+            else if (randHand < 0.20) baseHand = range.find(r => r.id === 'AKs');
+            else baseHand = range[Math.floor(Math.random() * range.length)];
+            
             currentHand = getRandomPalos(baseHand);
-            villanoStackSize = Math.random() > 0.7 ? 50 : 100;
+            villanoStackSize = Math.random() > 0.8 ? 50 : 100;
             let heroPosIdx = Math.floor(Math.random() * 6);
             let villanoPosIdx;
             do { villanoPosIdx = Math.floor(Math.random() * 6); } while (villanoPosIdx === heroPosIdx);
             
             if (villanoStackSize === 100) {
-                if (currentHand.id === 'KK' && Math.random() > 0.5) isVillanoNit = true;
+                // FRECUENCIA AUMENTADA DE NITS (80% si es KK o AKs)
+                if ((currentHand.id === 'KK' || currentHand.id === 'AKs') && Math.random() < 0.8) isVillanoNit = true;
+                else if (Math.random() < 0.2) isVillanoNit = true;
+
                 currentHBet = (heroPosIdx < villanoPosIdx) ? 24 : 10;
                 currentVBet = (heroPosIdx < villanoPosIdx) ? 100 : 24;
                 setupUI(heroPosIdx, villanoPosIdx, currentHBet, currentVBet, 100);
