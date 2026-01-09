@@ -222,7 +222,7 @@
         document.querySelectorAll('.card-back-group').forEach(c => c.style.display = 'none');
         document.querySelectorAll('.bet-chips').forEach(b => { b.style.display = 'none'; b.style.borderColor = '#fbbf24'; });
         
-        if (manualScenarios.length > 0 && Math.random() < 0.2) {
+        if (manualScenarios.length > 0 && Math.random() < 0.4) {
             const s = manualScenarios[Math.floor(Math.random() * manualScenarios.length)];
             currentHand = s.hand; currentHBet = s.hBet; currentVBet = s.vBet; villanoStackSize = 100;
             setupUI(s.heroPos, s.villanoPos, s.hBet, s.vBet, 100);
@@ -310,3 +310,4 @@
 </script>
 </body>
 </html>
+
